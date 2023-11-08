@@ -31,7 +31,7 @@ const RoomsList = ({ user, setOpen }: Props) => {
   return (
     <div className="flex justify-between flex-col-reverse md:flex-row lg:flex-row">
       {user && (
-        <div className="flex justify-end fixed bottom-0 right-0 mr-4 mb-4">
+        <div className="flex justify-end fixed bottom-0 right-0 mr-4 mb-4 z-10">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={() => setOpen(true)}

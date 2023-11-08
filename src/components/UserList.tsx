@@ -1,16 +1,25 @@
 import { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase.config";
-// import { User } from "../types/users.types";
-import { auth } from "../firebase.config";
 import UserCard from "./UserCard";
+import { User } from "../types/users.types";
 
 //Query all users from firebase and display them in a list
 
 const UserList = () => {
-  // const [users, setUsers] = useState<User[]>([]);
-  // const usersRef = collection(db, "users");
-  // const [user, setUser] = useState<firebase.User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const usersRef = collection(db, "users");
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(usersRef, (snapshot) => {
+      const users: User[] = [];
+      snapshot.forEach((doc) => {
+        users.push({ ...doc.data(), id: doc.id } as User);
+      });
+      setUsers(users);
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <>
@@ -19,7 +28,9 @@ const UserList = () => {
       </h1>
       {/* user Card with profile picture and name */}
       <div className="flex flex-col justify-center items-center">
-        <UserCard />
+        {users.map((user) => (
+          <UserCard user={user} key={user.id} />
+        ))}
       </div>
     </>
   );

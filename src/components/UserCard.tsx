@@ -1,19 +1,23 @@
-const UserCard = () => {
+import { User } from "../types/users.types";
+
+type Props = {
+  user: User;
+};
+
+const UserCard = ({ user }: Props) => {
   return (
     <>
       <div className="flex flex-row justify-center items-center w-full shadow-2xl rounded-md p-2">
         <img
-          src="https://cdn.pixabay.com/photo/2015/12/11/11/43/google-1088004_1280.png"
-          alt="google logo"
+          src={user.avatar}
+          alt="user avatar"
           className="h-9 w-9 inline-block mr-2 rounded-full"
         />
         <div className="flex flex-col justify-center grow">
-          <p className="font-semibold text-white">John Doe</p>
-          <p className="text-xs text-slate-300 mt-1 italic">
-            saimalam.work@gmail.com
-          </p>
+          <p className="font-semibold text-white">{user.name}</p>
+          <p className="text-xs text-slate-300 mt-1 italic">{user.email}</p>
           <p className="text-[10px] text-gray-600 tracking-tighter mt-1">
-            Joined On : 23-11-2023
+            Joined On : {user.createdAt.slice(0, 16)}
           </p>
         </div>
       </div>
